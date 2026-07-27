@@ -1,5 +1,7 @@
 # KAOS
 
+![Flagship Framework](https://img.shields.io/badge/Flagship-Framework-8DC63F?style=for-the-badge)
+
 ## Knowledge Acquisition Operating System
 
 Transforming chaos into governed knowledge.
