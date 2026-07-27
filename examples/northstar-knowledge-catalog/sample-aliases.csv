@@ -1,0 +1,4 @@
+alias_key,alias_value,alias_type,target_type,target_key,source_record_key,status,note
+northstar-alias-001,Northstar Analytics Platform,alternate title,canonical_entity,northstar-canonical-001,northstar-record-002,Accepted,Alias retained while duplicate maps to Northstar Analytics Suite
+northstar-alias-002,Data Governance Standard,alternate public name,canonical_entity,northstar-canonical-002,northstar-record-004,Accepted,Research archive name preserved as alias
+northstar-alias-003,Foundations Admin Edition,shorthand,canonical_entity,northstar-canonical-004,northstar-record-006,Accepted,Course directory shorthand preserved for variant search

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/kaos/schemas/manifest.schema.json",
+  "title": "KAOS Source Manifest",
+  "type": "object",
+  "required": ["source_code", "source_name", "kaos_version", "lifecycle_state", "artifacts"],
+  "additionalProperties": false,
+  "properties": {
+    "source_code": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]+$"
+    },
+    "source_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kaos_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "lifecycle_state": {
+      "type": "object",
+      "required": ["current_stage", "status", "decision"],
+      "additionalProperties": false,
+      "properties": {
+        "current_stage": { "$ref": "#/$defs/stage_id" },
+        "status": { "$ref": "#/$defs/status_value" },
+        "decision": { "$ref": "#/$defs/decision_value" },
+        "next_stage": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/stage_id" }
+          ]
+        },
+        "current_artifact_id": { "$ref": "#/$defs/artifact_id" },
+        "route_reason": { "type": "string", "minLength": 1 },
+        "blocked_reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "repository_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dataset_version": { "type": "string" },
+        "revision": { "type": "string" },
+        "captured_at": { "type": "string" }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "./artifact-reference.schema.json"
+      }
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "stage_id": {
+      "type": "string",
+      "enum": [
+        "source-boundary-audit",
+        "acquisition-strategy",
+        "knowledge-inventory",
+        "baseline-reconciliation",
+        "editorial-triage",
+        "canonical-readiness-review",
+        "implementation-planning",
+        "implementation-approval",
+        "structured-data-implementation",
+        "post-implementation-review",
+        "source-certification",
+        "source-completion"
+      ]
+    },
+    "status_value": {
+      "type": "string",
+      "enum": ["Not Started", "In Progress", "Ready", "Blocked", "Completed"]
+    },
+    "decision_value": {
+      "type": "string",
+      "enum": ["Approved", "Approved With Notes", "Rejected", "Human Review Required", "Not Applicable"]
+    },
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^(artifact|manifest|input|repository)\\.[a-z0-9_]+$"
+    }
+  }
+}

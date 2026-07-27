@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/kaos/schemas/skill-metadata.schema.json",
+  "title": "KAOS Skill Metadata",
+  "type": "object",
+  "required": ["kaos_skill"],
+  "additionalProperties": false,
+  "properties": {
+    "kaos_skill": {
+      "type": "object",
+      "required": [
+        "name",
+        "id",
+        "version",
+        "specification_version",
+        "compatible_kaos_versions",
+        "skill_state",
+        "automation_readiness",
+        "capability",
+        "lifecycle_stage",
+        "owner",
+        "description",
+        "depends_on_skills",
+        "prerequisites",
+        "consumes",
+        "produces",
+        "requires_approval",
+        "approval_gate",
+        "permitted_status_values",
+        "permitted_decision_values",
+        "next_skill",
+        "conditional_next_skills",
+        "extensions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "id": { "$ref": "#/$defs/stage_id" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "specification_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "compatible_kaos_versions": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "skill_state": { "type": "string", "enum": ["Draft", "Under Review", "Approved", "Deprecated", "Retired"] },
+        "automation_readiness": { "type": "string", "enum": ["manual", "assisted", "automatable"] },
+        "capability": { "type": "string", "minLength": 1 },
+        "lifecycle_stage": {
+          "type": "object",
+          "required": ["stage_id", "stage_name"],
+          "additionalProperties": false,
+          "properties": {
+            "stage_id": { "$ref": "#/$defs/stage_id" },
+            "stage_name": { "type": "string", "minLength": 1 }
+          }
+        },
+        "owner": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "depends_on_skills": { "type": "array", "items": { "$ref": "#/$defs/stage_id" } },
+        "prerequisites": { "type": "array", "items": { "$ref": "#/$defs/artifact_reference" } },
+        "consumes": { "type": "array", "items": { "$ref": "#/$defs/artifact_reference" } },
+        "produces": { "type": "array", "items": { "$ref": "#/$defs/artifact_reference" } },
+        "requires_approval": { "type": "boolean" },
+        "approval_gate": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/approval_gate" }
+          ]
+        },
+        "permitted_status_values": { "type": "array", "items": { "$ref": "#/$defs/status_value" }, "minItems": 1 },
+        "permitted_decision_values": { "type": "array", "items": { "$ref": "#/$defs/decision_value" }, "minItems": 1 },
+        "next_skill": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/stage_id" }
+          ]
+        },
+        "conditional_next_skills": { "type": "array", "items": { "$ref": "#/$defs/conditional_next_skill" } },
+        "extensions": { "type": "object" }
+      }
+    }
+  },
+  "$defs": {
+    "stage_id": {
+      "type": "string",
+      "enum": [
+        "source-boundary-audit",
+        "acquisition-strategy",
+        "knowledge-inventory",
+        "baseline-reconciliation",
+        "editorial-triage",
+        "canonical-readiness-review",
+        "implementation-planning",
+        "implementation-approval",
+        "structured-data-implementation",
+        "post-implementation-review",
+        "source-certification",
+        "source-completion"
+      ]
+    },
+    "artifact_reference": {
+      "type": "object",
+      "required": ["artifact_id", "required"],
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": { "type": "string", "pattern": "^(artifact|manifest|input|repository)\\.[a-z0-9_]+$" },
+        "type": { "type": "string", "enum": ["artifact", "source_manifest", "operator_input", "structured_data", "reference"] },
+        "required": { "type": "boolean" },
+        "source": { "type": "string", "minLength": 1 },
+        "destination": { "type": "string", "minLength": 1 }
+      }
+    },
+    "approval_gate": {
+      "type": "object",
+      "required": [
+        "gate_id",
+        "gate_name",
+        "approval_type",
+        "approver_role",
+        "approval_timing",
+        "evidence_required",
+        "blocks_next_skill"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gate_id": { "type": "string", "pattern": "^gate\\.[a-z0-9-]+\\.[a-z0-9-]+$" },
+        "gate_name": { "type": "string", "minLength": 1 },
+        "approval_type": { "type": "string", "minLength": 1 },
+        "approver_role": { "type": "string", "minLength": 1 },
+        "approval_timing": { "type": "string", "minLength": 1 },
+        "evidence_required": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+        "blocks_next_skill": { "type": "boolean" }
+      }
+    },
+    "conditional_next_skill": {
+      "type": "object",
+      "required": ["condition", "decision_value", "status_value", "next_skill", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "condition": { "type": "string", "minLength": 1 },
+        "decision_value": { "$ref": "#/$defs/decision_value" },
+        "status_value": { "$ref": "#/$defs/status_value" },
+        "next_skill": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/stage_id" }
+          ]
+        },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "status_value": {
+      "type": "string",
+      "enum": ["Not Started", "In Progress", "Ready", "Blocked", "Completed"]
+    },
+    "decision_value": {
+      "type": "string",
+      "enum": ["Approved", "Approved With Notes", "Rejected", "Human Review Required", "Not Applicable"]
+    }
+  }
+}

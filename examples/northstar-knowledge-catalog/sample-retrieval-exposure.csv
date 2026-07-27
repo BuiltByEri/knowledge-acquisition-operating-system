@@ -1,0 +1,8 @@
+exposure_key,target_type,target_key,exposure_decision,rag_ready,search_ready,decision_basis
+northstar-exposure-001,canonical_entity,northstar-canonical-001,EXPOSE,true,true,Approved canonical product ready for downstream indexing or retrieval
+northstar-exposure-002,canonical_entity,northstar-canonical-002,WITHHOLD,false,false,Policy has preserved conflict notes and needs reviewer note before retrieval
+northstar-exposure-003,canonical_entity,northstar-canonical-003,EXPOSE,true,true,Approved course ready for downstream indexing or retrieval
+northstar-exposure-004,canonical_entity,northstar-canonical-004,WITHHOLD,false,false,Variant withheld until audience labeling is reviewed
+northstar-exposure-005,canonical_entity,northstar-canonical-005,WITHHOLD,false,true,Service is searchable for internal operations but not ready for retrieval generation
+northstar-exposure-006,source_record,northstar-record-008,WITHHOLD,false,false,Retired service preserved for provenance only
+northstar-exposure-007,source_record,northstar-record-010,WITHHOLD,false,true,Research record retained as searchable context only

@@ -1,0 +1,3 @@
+conflict_key,subject_key,subject_type,field,source_record_keys,claim_values,resolution_state,resolution_note
+northstar-conflict-001,northstar-canonical-002,canonical_entity,owner,northstar-record-003;northstar-record-004,Knowledge Governance;Data Office,Preserved With Governed Value,Canonical owner uses current policy library claim and archive claim remains traceable
+northstar-conflict-002,northstar-canonical-005,canonical_entity,availability,northstar-record-007;northstar-record-008,Current;Retired,Resolved,Current service remains canonical and retired service remains supporting context only

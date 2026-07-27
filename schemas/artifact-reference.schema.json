@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/kaos/schemas/artifact-reference.schema.json",
+  "title": "KAOS Artifact Reference",
+  "type": "object",
+  "required": ["artifact_id", "type", "required"],
+  "additionalProperties": true,
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^(artifact|manifest|input|repository)\\.[a-z0-9_]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["artifact", "source_manifest", "operator_input", "structured_data", "reference"]
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "source": {
+      "type": "string"
+    },
+    "destination": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+proposal_key,source_record_keys,proposed_canonical_name,entity_type,readiness_outcome,editorial_disposition,final_state,rationale
+northstar-proposal-001,northstar-record-001;northstar-record-002,Northstar Analytics Suite,Product,Ready,APPROVE_NEW_CANONICAL,Approved,Duplicate product listings resolve to one canonical entity
+northstar-proposal-002,northstar-record-003;northstar-record-004,Northstar Data Governance Policy,Policy,Ready With Notes,APPROVE_NEW_CANONICAL,Approved,Alias preserved and conflict notes retained
+northstar-proposal-003,northstar-record-005,Northstar Foundations Course,Course,Ready,APPROVE_NEW_CANONICAL,Approved,General course is distinct and governed
+northstar-proposal-004,northstar-record-006,Northstar Foundations Course - Administrator Edition,Course,Ready With Notes,ENTITY_VARIANT,Approved As Variant,Meaningfully distinct administrator variant
+northstar-proposal-005,northstar-record-007,Northstar Concierge Support,Service,Ready,APPROVE_NEW_CANONICAL,Approved,Current service is eligible for canonical modeling
+northstar-proposal-006,northstar-record-008,Northstar Legacy Onboarding Service,Service,Rejected,SUPPORTING_CONTEXT_ONLY,Rejected,Retired service retained only for context
+northstar-proposal-007,northstar-record-009,Northstar Data Retention Policy,Policy,Human Review Required,NEEDS_EDITORIAL_REVIEW,Deferred,Draft policy needs human review
+northstar-proposal-008,northstar-record-010,Northstar Search Behavior Study,Research Record,Rejected,NON_CANONICAL_SOURCE_RECORD,Rejected,Research record supports context but is not a canonical entity
