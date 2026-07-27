@@ -1,0 +1,11 @@
+source_record_key,source_surface,source_title,object_type,source_status,summary
+northstar-record-001,Northstar Product Index,Northstar Analytics Suite,Product,Current,Analytics workspace for governed operational metrics
+northstar-record-002,Northstar Product Index,Northstar Analytics Platform,Product,Current,Alternate listing for the same analytics product with minor wording differences
+northstar-record-003,Northstar Policy Library,Northstar Data Governance Policy,Policy,Current,Defines review stewardship and release controls
+northstar-record-004,Northstar Research Archive,Data Governance Standard,Research Record,Archived,Uses an alternate public name and older owner claim for the governance policy
+northstar-record-005,Northstar Course Directory,Northstar Foundations Course,Course,Current,Introductory course for general users
+northstar-record-006,Northstar Course Directory,Northstar Foundations Course - Administrator Edition,Course,Current,Administrator-specific course variant with distinct audience and controls
+northstar-record-007,Northstar Service Catalog,Northstar Concierge Support,Service,Current,Assisted onboarding service for managed customer setup
+northstar-record-008,Northstar Service Catalog,Northstar Legacy Onboarding Service,Service,Retired,Retired service retained for source context only
+northstar-record-009,Northstar Policy Library,Northstar Data Retention Policy,Policy,Draft,Draft policy that requires human review before canonical approval
+northstar-record-010,Northstar Research Archive,Northstar Search Behavior Study,Research Record,Current,Research note retained as context for downstream search planning

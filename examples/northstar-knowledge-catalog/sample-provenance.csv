@@ -1,0 +1,8 @@
+source_record_key,canonical_entity_key,relationship_type,confidence,editorial_disposition,note
+northstar-record-001,northstar-canonical-001,EXACT_MATCH,High,APPROVE_NEW_CANONICAL,Primary product listing
+northstar-record-002,northstar-canonical-001,DUPLICATE_OF,High,MAP_TO_EXISTING,Duplicate title maps to the analytics suite
+northstar-record-003,northstar-canonical-002,EXACT_MATCH,High,APPROVE_NEW_CANONICAL,Current policy controls canonical policy identity
+northstar-record-004,northstar-canonical-002,ALIAS_OF,Medium,MAP_TO_EXISTING,Alternate public name retained from research archive
+northstar-record-005,northstar-canonical-003,EXACT_MATCH,High,APPROVE_NEW_CANONICAL,General course maps to approved course entity
+northstar-record-006,northstar-canonical-004,VARIANT_OF,High,ENTITY_VARIANT,Administrator edition is a distinct governed variant
+northstar-record-007,northstar-canonical-005,EXACT_MATCH,High,APPROVE_NEW_CANONICAL,Current service maps to approved service entity

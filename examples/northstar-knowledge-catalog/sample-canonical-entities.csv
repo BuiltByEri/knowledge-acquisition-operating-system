@@ -1,0 +1,6 @@
+canonical_entity_key,canonical_name,entity_type,status,canonical_state,retrieval_exposure
+northstar-canonical-001,Northstar Analytics Suite,Product,Active,Approved,Exposed
+northstar-canonical-002,Northstar Data Governance Policy,Policy,Active,Approved With Notes,Withheld
+northstar-canonical-003,Northstar Foundations Course,Course,Active,Approved,Exposed
+northstar-canonical-004,Northstar Foundations Course - Administrator Edition,Course Variant,Active,Approved With Notes,Withheld
+northstar-canonical-005,Northstar Concierge Support,Service,Active,Approved With Notes,Withheld
