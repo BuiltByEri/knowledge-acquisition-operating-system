@@ -20,3 +20,9 @@ KAOS skills are reusable lifecycle components. They are methodology contracts, n
 KAOS v1.0.0 public skills are `Approved`.
 
 Editorial Triage uses the controlled record-level disposition vocabulary defined in `docs/STATUS_AND_DECISION_MODEL.md`. Those dispositions are separate from KAOS status values and decision values.
+
+Conditional no-change routes:
+
+- Empty inventories route from `knowledge-inventory` to `source-certification`, then `source-completion`.
+- Intentionally skipped implementation routes from `implementation-approval` to `post-implementation-review`, then `source-certification` and `source-completion`.
+- Standard implementation still routes through `structured-data-implementation` before `post-implementation-review`.

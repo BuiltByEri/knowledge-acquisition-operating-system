@@ -35,7 +35,7 @@ kaos_skill:
   conditional_next_skills:
     - { condition: "Plan is incomplete, stale, contradictory, or materially changed.", decision_value: "Rejected", status_value: "Completed", next_skill: "implementation-planning", reason: "A renewed implementation plan is required before authorization." }
     - { condition: "Upstream governance defect prevents safe authorization.", decision_value: "Human Review Required", status_value: "Blocked", next_skill: null, reason: "The owning prior stage must resolve the defect before approval." }
-    - { condition: "No production implementation is intentionally authorized.", decision_value: "Not Applicable", status_value: "Completed", next_skill: null, reason: "No execution stage is required when implementation is skipped." }
+    - { condition: "No production implementation is intentionally authorized.", decision_value: "Not Applicable", status_value: "Completed", next_skill: "post-implementation-review", reason: "Review records the authorized no-change outcome before certification and completion." }
   extensions: {}
 ---
 
@@ -66,7 +66,7 @@ Verify plan completeness, verify repository freshness, confirm target files or s
 Validate exact-scope traceability, upstream approval evidence, excluded-scope protection, target specificity, expected deltas, repository snapshot, and approval-gate evidence.
 
 ## 9. Success Criteria
-Structured Data Implementation can execute the authorized scope exactly as written.
+Structured Data Implementation can execute the authorized scope exactly as written, or Post-Implementation Review can verify that no production implementation was intentionally authorized.
 
 ## 10. Outputs
 Outputs are the Implementation Approval artifact and narrow manifest update.
@@ -90,10 +90,10 @@ Failure modes include approving stale scope, authorizing implied work, overlooki
 `artifact.implementation_approval` is produced only by this skill.
 
 ## 17. Exit Criteria
-Exit when the artifact records authorized scope, excluded scope, approval gate result, repository snapshot, status, decision, blockers, and next permitted transition.
+Exit when the artifact records authorized scope, excluded scope, approval gate result, repository snapshot, status, decision, blockers, and next permitted transition. Intentional no-implementation authorization must route to `post-implementation-review`.
 
 ## 18. Related Skills
-Previous skill: `implementation-planning`. Next skill: `structured-data-implementation`.
+Previous skill: `implementation-planning`. Next skill: `structured-data-implementation`. Conditional no-implementation route: `post-implementation-review`.
 
 ## 19. Version History
 | Version | State | Notes |

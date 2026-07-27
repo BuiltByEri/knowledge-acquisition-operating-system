@@ -23,6 +23,14 @@ The KAOS lifecycle is a governed sequence for acquiring fragmented knowledge and
 
 Canonical Readiness Review runs only when Editorial Triage proposes one or more new canonical entities. If no new canonical entities are proposed and other approved work remains, Editorial Triage may route directly to Implementation Planning.
 
+Empty inventories and intentional no-change implementation outcomes still require governed closure:
+
+- Empty Inventory Path: `knowledge-inventory` -> `source-certification` -> `source-completion`
+- Intentionally Skipped Implementation Path: `implementation-approval` -> `post-implementation-review` -> `source-certification` -> `source-completion`
+- Standard Implementation Path: `implementation-approval` -> `structured-data-implementation` -> `post-implementation-review` -> `source-certification` -> `source-completion`
+
+These routes preserve certification and completion without requiring implementation work when no implementation scope exists.
+
 ## Repository Workflow Boundary
 
 Commit, push, merge, and review request actions are outside the KAOS Skill Library.

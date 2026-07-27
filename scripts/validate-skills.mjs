@@ -50,6 +50,11 @@ const expectedStatusValues = ["Not Started", "In Progress", "Ready", "Blocked", 
 const expectedDecisionValues = ["Approved", "Approved With Notes", "Rejected", "Human Review Required", "Not Applicable"];
 const problems = [];
 const producedArtifacts = new Map();
+const transitionEdges = new Set();
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
 function readSkill(skillId) {
   const file = path.join(skillsDir, skillId, "SKILL.md");
@@ -98,6 +103,32 @@ function artifactIds(block) {
   return [...block.matchAll(/artifact_id:\s*"([^"]+)"/g)].map((match) => match[1]);
 }
 
+function conditionalRoutes(yaml) {
+  return [...blockBetween(yaml, "conditional_next_skills", "extensions").matchAll(/\{([^}]+)\}/g)].map((match) => match[1]);
+}
+
+function routeNext(route) {
+  const match = route.match(/next_skill:\s*(?:"([^"]+)"|(null))/);
+  if (!match) return undefined;
+  return match[2] === "null" ? null : match[1];
+}
+
+function hasConditionalRoute(routes, { condition, decision, status, next }) {
+  const nextPattern = next === null
+    ? /next_skill:\s*null/
+    : new RegExp(`next_skill:\\s*"${escapeRegExp(next)}"`);
+  return routes.some((route) => (
+    condition.test(route) &&
+    route.includes(`decision_value: "${decision}"`) &&
+    route.includes(`status_value: "${status}"`) &&
+    nextPattern.test(route)
+  ));
+}
+
+function addTransition(from, to) {
+  if (to) transitionEdges.add(`${from}->${to}`);
+}
+
 function checkSections(skill) {
   const headings = [...skill.text.matchAll(/^##\s+\d+\.\s+(.+)$/gm)].map((match) => match[1].trim());
   requiredSections.forEach((section, index) => {
@@ -111,6 +142,10 @@ function checkTransition(skill, expected) {
   const next = scalar(skill.yaml, "next_skill");
   if (next !== expected.next) {
     problems.push(`${expected.id} next_skill expected ${expected.next ?? "null"} but found ${next ?? "missing"}`);
+  }
+  addTransition(expected.id, next);
+  for (const route of conditionalRoutes(skill.yaml)) {
+    addTransition(expected.id, routeNext(route));
   }
 }
 
@@ -150,6 +185,62 @@ function checkVocabulary(skill, expected) {
   }
 }
 
+function checkNoChangeRoutes(skill, expected) {
+  const routes = conditionalRoutes(skill.yaml);
+
+  if (expected.id === "knowledge-inventory") {
+    if (routes.some((route) => /No knowledge objects exist/.test(route) && /next_skill:\s*"source-completion"/.test(route))) {
+      problems.push("knowledge-inventory empty-inventory route must not bypass Source Certification");
+    }
+    if (!hasConditionalRoute(routes, {
+      condition: /No knowledge objects exist/,
+      decision: "Not Applicable",
+      status: "Completed",
+      next: "source-certification"
+    })) {
+      problems.push("knowledge-inventory must route empty inventories to source-certification");
+    }
+  }
+
+  if (expected.id === "implementation-approval") {
+    if (routes.some((route) => /No production implementation is intentionally authorized/.test(route) && /next_skill:\s*null/.test(route))) {
+      problems.push("implementation-approval intentional no-implementation route must not terminate");
+    }
+    if (!hasConditionalRoute(routes, {
+      condition: /No production implementation is intentionally authorized/,
+      decision: "Not Applicable",
+      status: "Completed",
+      next: "post-implementation-review"
+    })) {
+      problems.push("implementation-approval must route intentional no-implementation outcomes to post-implementation-review");
+    }
+  }
+
+  if (expected.id === "post-implementation-review") {
+    if (!/depends_on_skills:\s*\["implementation-approval",\s*"structured-data-implementation"\]/.test(skill.yaml)) {
+      problems.push("post-implementation-review must support implementation-approval and structured-data-implementation inputs");
+    }
+    if (!/artifact_id:\s*"artifact\.structured_data_implementation_report"[^}\n]*required:\s*false/.test(skill.yaml)) {
+      problems.push("post-implementation-review must not require structured_data_implementation_report for authorized no-change scope");
+    }
+  }
+
+  if (expected.id === "source-certification") {
+    if (!/depends_on_skills:\s*\["knowledge-inventory",\s*"post-implementation-review"\]/.test(skill.yaml)) {
+      problems.push("source-certification must support empty-inventory and post-implementation-review entry paths");
+    }
+    if (!/artifact_id:\s*"artifact\.acquisition_strategy"[^}\n]*required:\s*true/.test(skill.yaml)) {
+      problems.push("source-certification must require acquisition_strategy for empty-inventory certification");
+    }
+    if (!/artifact_id:\s*"artifact\.post_implementation_review"[^}\n]*required:\s*false/.test(skill.yaml)) {
+      problems.push("source-certification must not require post_implementation_review for empty-inventory certification");
+    }
+    if (!/empty[- ]inventory/i.test(skill.text) || !/no implementation required/i.test(skill.text)) {
+      problems.push("source-certification must distinguish empty inventory and no implementation required from missing evidence");
+    }
+  }
+}
+
 const existingSkillIds = fs
   .readdirSync(skillsDir, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
@@ -178,6 +269,7 @@ for (const expected of expectedSkills) {
   checkApproval(skill, expected);
   checkArtifacts(skill, expected);
   checkVocabulary(skill, expected);
+  checkNoChangeRoutes(skill, expected);
   checkSections(skill);
 }
 
@@ -204,6 +296,21 @@ for (const artifact of expectedProducedArtifacts) {
 
 if (!fs.existsSync(path.join(root, "core", "KAOS_SKILL_SPECIFICATION.md"))) {
   problems.push("Missing core specification");
+}
+
+const requiredPaths = [
+  ["knowledge-inventory", "source-certification", "source-completion"],
+  ["implementation-approval", "post-implementation-review", "source-certification", "source-completion"],
+  ["implementation-approval", "structured-data-implementation", "post-implementation-review", "source-certification", "source-completion"]
+];
+
+for (const pathParts of requiredPaths) {
+  for (let i = 0; i < pathParts.length - 1; i += 1) {
+    const edge = `${pathParts[i]}->${pathParts[i + 1]}`;
+    if (!transitionEdges.has(edge)) {
+      problems.push(`Missing lifecycle route edge ${edge}`);
+    }
+  }
 }
 
 if (problems.length) {

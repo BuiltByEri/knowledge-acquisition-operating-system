@@ -29,7 +29,7 @@ kaos_skill:
   next_skill: "baseline-reconciliation"
   conditional_next_skills:
     - { condition: "Strategy is missing or blocked.", decision_value: "Human Review Required", status_value: "Blocked", next_skill: "acquisition-strategy", reason: "Inventory capture requires strategy." }
-    - { condition: "No knowledge objects exist inside the approved boundary.", decision_value: "Not Applicable", status_value: "Completed", next_skill: "source-completion", reason: "Empty acquisitions may close with documentation." }
+    - { condition: "No knowledge objects exist inside the approved boundary.", decision_value: "Not Applicable", status_value: "Completed", next_skill: "source-certification", reason: "Empty acquisitions require certification before completion." }
   extensions: {}
 ---
 
@@ -57,10 +57,10 @@ The repository may contain existing baseline data for duplicate signal capture. 
 Enumerate approved source objects, preserve source-native labels, capture identifiers and URLs, record aliases, note duplicate signals, record source conflicts, record uncertainty, and produce the inventory artifact.
 
 ## 8. Validation Requirements
-Validate count reconciliation, required fields, boundary compliance, source-native preservation, and missing-value notes.
+Validate count reconciliation, required fields, boundary compliance, source-native preservation, missing-value notes, and empty-inventory routing through Source Certification.
 
 ## 9. Success Criteria
-Every approved knowledge object is captured or explicitly explained.
+Every approved knowledge object is captured, or the inventory explicitly records that no eligible knowledge objects exist inside the approved boundary.
 
 ## 10. Outputs
 Outputs are the Knowledge Inventory artifact and narrow manifest update.
@@ -84,10 +84,10 @@ Failure modes include object-count drift, hidden source surfaces, source truth n
 `artifact.knowledge_inventory` is produced only by this skill.
 
 ## 17. Exit Criteria
-Exit when inventory count, status, decision, blockers, and next transition are documented.
+Exit when inventory count, status, decision, blockers, and next transition are documented. Empty inventories must route to `source-certification`, not directly to completion.
 
 ## 18. Related Skills
-Previous skill: `acquisition-strategy`. Next skill: `baseline-reconciliation`.
+Previous skill: `acquisition-strategy`. Next skill: `baseline-reconciliation`. Conditional empty-inventory route: `source-certification`.
 
 ## 19. Version History
 | Version | State | Notes |
