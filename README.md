@@ -8,7 +8,7 @@ Transforming chaos into governed knowledge.
 
 KAOS (Knowledge Acquisition Operating System) is an AI-assisted framework for transforming fragmented information into governed, structured knowledge through repeatable acquisition workflows, human approval gates, provenance tracking, and canonical data modeling.
 
-This repository contains KAOS v1.0.0, the approved public release package prepared for controlled publication.
+This repository contains KAOS v1.0.0, the approved public framework release.
 
 ## What KAOS Is
 
@@ -29,6 +29,35 @@ KAOS can prepare governed knowledge for:
 ## The Problem KAOS Solves
 
 Knowledge work often starts with inconsistent source surfaces, duplicate records, conflicting claims, unclear ownership, and undocumented transformations. KAOS creates a repeatable path for discovering knowledge objects, reconciling them against a governed baseline, deciding what should become canonical, preserving provenance, and validating structured outputs.
+
+## Start Here
+
+New users should start with:
+
+- [Quick Start](docs/QUICK_START.md)
+- [Knowledge Acquisition Lifecycle](docs/KNOWLEDGE_ACQUISITION_LIFECYCLE.md)
+- [Source Profile Template](source-profiles/TEMPLATE.md)
+- [Northstar Example](examples/northstar-knowledge-catalog/README.md)
+- [Validation](#validation-scripts)
+
+Manual KAOS use is fully supported. The KAOS Skill Builder is planned for v1.1 and is not required to adopt KAOS v1.0.0. Future orchestration is planned, but KAOS v1.0.0 can be used without an orchestrator.
+
+## Installation & Adoption Options
+
+KAOS is not distributed as a package-manager install. Use one of these models:
+
+- Explore KAOS as a reference repository.
+- Adopt KAOS inside an existing work repository by copying the approved framework files and choosing local artifact paths.
+- Maintain KAOS separately as a governance reference while storing acquisition artifacts elsewhere.
+- Use planned KAOS Skill Builder tooling after it ships in a future release.
+
+Record `framework_version: "1.0.0"` in local configuration or acquisition notes when adapting KAOS so future upgrades can be compared safely.
+
+## When to Use KAOS
+
+Use KAOS when knowledge is fragmented across sources, provenance matters, canonical decisions require human governance, AI assists intake or classification, and outputs need repeatability for search, analytics, APIs, knowledge graphs, RAG, or AI systems.
+
+KAOS may be more structure than needed for a one-off disposable transformation with no governed decisions, no provenance requirement, and no human review. Small pilots are still a good fit when traceability matters.
 
 ## Design Principles
 
@@ -108,7 +137,7 @@ tests/                KAOS validation notes
 
 ## Getting Started
 
-Start with `docs/KAOS_OVERVIEW.md`, then read the lifecycle, skills, artifact catalog, and status model. Use the Northstar example to see how the concepts fit together.
+Use [docs/QUICK_START.md](docs/QUICK_START.md) for the first 15-30 minutes. Then read `docs/KAOS_OVERVIEW.md`, the lifecycle, skills, artifact catalog, and status model. Use the Northstar example to see how the concepts fit together.
 
 ## Validation Scripts
 
@@ -124,7 +153,7 @@ KAOS is AI-assisted, not fully automated. AI may help discover, compare, draft, 
 
 ## Project Status
 
-KAOS v1.0.0 is approved for controlled public repository migration. Publication remains a separate release workflow.
+KAOS v1.0.0 is the frozen public foundation release. The Core specification and twelve lifecycle skills are approved. Current post-release work focuses on adoption documentation, examples, templates, and validation improvements without changing the approved methodology.
 
 ## Roadmap
 
