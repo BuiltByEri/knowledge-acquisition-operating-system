@@ -40,7 +40,7 @@ New users should start with:
 - [Northstar Example](examples/northstar-knowledge-catalog/README.md)
 - [Validation](#validation-scripts)
 
-Manual KAOS use is fully supported. The optional KAOS Skill Builder may assist with skill creation or updates, but it is not required to adopt KAOS. Future orchestration is planned, but KAOS v1.0.0 can be used without an orchestrator.
+Manual KAOS use is fully supported. The KAOS Skill Builder is planned for v1.1 and is not required to adopt KAOS v1.0.0. Future orchestration is planned, but KAOS v1.0.0 can be used without an orchestrator.
 
 ## Installation & Adoption Options
 
@@ -49,7 +49,7 @@ KAOS is not distributed as a package-manager install. Use one of these models:
 - Explore KAOS as a reference repository.
 - Adopt KAOS inside an existing work repository by copying the approved framework files and choosing local artifact paths.
 - Maintain KAOS separately as a governance reference while storing acquisition artifacts elsewhere.
-- Use the optional KAOS Skill Builder when creating or updating KAOS-compliant skills.
+- Use planned KAOS Skill Builder tooling after it ships in a future release.
 
 Record `framework_version: "1.0.0"` in local configuration or acquisition notes when adapting KAOS so future upgrades can be compared safely.
 

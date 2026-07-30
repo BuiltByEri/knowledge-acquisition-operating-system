@@ -2,7 +2,7 @@
 
 This guide helps you complete a first KAOS Source Boundary Audit in about 15-30 minutes.
 
-KAOS can be used manually. The optional KAOS Skill Builder can assist with skill creation or updates, but it is not required for a first acquisition. Future orchestration is planned, but no orchestrator is required for KAOS v1.0.0 adoption.
+KAOS can be used manually. The KAOS Skill Builder is planned for v1.1 tooling and is not required for a first acquisition. Future orchestration is planned, but no orchestrator is required for KAOS v1.0.0 adoption.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ Adopt: copy the approved KAOS framework files into an existing work repository, 
 
 Reference: keep KAOS in a separate repository and store acquisition artifacts in your own workspace while citing the KAOS version used.
 
-Optional Builder: use the KAOS Skill Builder only when creating or updating KAOS-compliant lifecycle skills. Basic KAOS use does not require the builder.
+Planned Builder: the KAOS Skill Builder is planned for a future release to assist with creating or updating KAOS-compliant lifecycle skills. Until that tooling ships, use KAOS manually.
 
 Record the framework version in local setup notes when adapting KAOS:
 

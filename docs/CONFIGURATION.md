@@ -60,9 +60,9 @@ Portable KAOS paths should:
 
 If a path resolves outside the workspace root, stop and correct the configuration before writing artifacts.
 
-## Builder Compatibility
+## Future Builder Compatibility
 
-The optional KAOS Skill Builder can use the same workspace-root and artifact-root convention when generating or updating KAOS-compliant skills. The builder is optional and does not replace human Product Review.
+The KAOS Skill Builder is planned for v1.1 tooling. The workspace-root and artifact-root convention is intended to remain compatible with that future builder when it ships. Manual KAOS use is fully supported in v1.0.0.
 
 Configuration does not change KAOS methodology, lifecycle stages, approval gates, status values, decision values, artifact ownership, or provenance rules.
 
