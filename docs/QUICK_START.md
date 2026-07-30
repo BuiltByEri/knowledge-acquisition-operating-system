@@ -59,7 +59,13 @@ This helps compare local changes against future KAOS releases.
 
    Fill in source identity, source surfaces, included objects, excluded objects, known conflicts, provenance expectations, and approval notes.
 
-3. Draft the Source Boundary Audit.
+3. Initialize the active source manifest.
+
+   Before invoking Source Boundary Audit, create or update `manifest.active_source_acquisition` in your chosen manifest store. KAOS does not require a specific manifest file format.
+
+   The active manifest should record the approved source entry point (`input.source_entry_point`), source code, source name, `framework_version: "1.0.0"`, current stage `source-boundary-audit`, applicable KAOS status and decision values, and the expected Source Boundary Audit artifact path.
+
+4. Draft the Source Boundary Audit.
 
    Copy `artifact-templates/SOURCE_BOUNDARY_AUDIT_TEMPLATE.md` into the artifact root. Name it with a clear source code, for example:
 
@@ -67,11 +73,11 @@ This helps compare local changes against future KAOS releases.
    docs/knowledge-acquisition/{SOURCE_CODE}/{SOURCE_CODE}_SOURCE_BOUNDARY_AUDIT.md
    ```
 
-4. Use the Source Boundary Audit skill.
+5. Use the Source Boundary Audit skill.
 
-   Read `skills/source-boundary-audit/SKILL.md`. Fill the starter artifact with the acquisition name, source, purpose, included scope, excluded scope, access constraints, assumptions, known risks, human review, and next stage.
+   Read `skills/source-boundary-audit/SKILL.md`. Fill the starter artifact with the acquisition name, source, purpose, included scope, excluded scope, access constraints, assumptions, source conflicts, batching decision, known risks, blockers, human review, and next stage.
 
-5. Record human review.
+6. Record human review.
 
    A human reviewer records the applicable KAOS-approved status and decision values.
 
@@ -93,7 +99,13 @@ This helps compare local changes against future KAOS releases.
 
    Review notes should explain what is authorized and what is not authorized. Acquisition Strategy must not begin while the source boundary remains unresolved.
 
-6. Run validation when Node.js is available.
+7. Update the manifest after the audit.
+
+   Source Boundary Audit produces `manifest.source_boundary_state`. Update the active manifest with the produced artifact reference, source-boundary status, source-boundary decision, blockers when present, route reason, and next permitted stage.
+
+   Acquisition Strategy requires both the Source Boundary Audit artifact and complete `manifest.source_boundary_state`. Do not begin Acquisition Strategy unless the manifest records a permitted transition to `acquisition-strategy`.
+
+8. Run validation when Node.js is available.
 
    ```bash
    node scripts/validate-skills.mjs
@@ -103,9 +115,9 @@ This helps compare local changes against future KAOS releases.
 
    These checks validate the public framework package. They do not replace human review of your acquisition artifact.
 
-7. Identify the next lifecycle stage.
+9. Identify the next lifecycle stage.
 
-   If the Source Boundary Audit is acceptable, the next stage is `acquisition-strategy`.
+   If the Source Boundary Audit artifact and manifest state permit the transition, the next stage is `acquisition-strategy`.
 
 ## Successful First Acquisition
 
@@ -114,9 +126,12 @@ The first acquisition is complete when:
 - The artifact root is selected.
 - `framework_version: "1.0.0"` is recorded in setup notes or configuration.
 - A source profile exists.
+- `manifest.active_source_acquisition` exists.
+- The approved source entry point is recorded as `input.source_entry_point`.
 - A Source Boundary Audit artifact exists.
 - Included and excluded scope are clear.
-- Access constraints, assumptions, and known risks are recorded.
+- Access constraints, assumptions, source conflicts, batching decision, known risks, and blockers are recorded.
 - Human review records an approved KAOS status value, an approved KAOS decision value, notes, and authorization.
+- `manifest.source_boundary_state` is updated with the artifact reference, status, decision, blockers when present, route reason, and next permitted stage.
 - Validation has been run when available.
-- The next lifecycle stage is identified.
+- The next lifecycle stage is identified from the completed manifest state.

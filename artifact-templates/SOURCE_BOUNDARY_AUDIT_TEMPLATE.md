@@ -21,7 +21,16 @@
 ## Assumptions
 
 
+## Source Conflicts
+
+
+## Batching Decision
+
+
 ## Known Risks
+
+
+## Blockers
 
 
 ## Human Review
