@@ -44,7 +44,20 @@ This helps compare local changes against future KAOS releases.
 
 2. Create a source profile.
 
-   Copy `source-profiles/TEMPLATE.md` into your artifact root or source-profile area and fill in source identity, source surfaces, included objects, excluded objects, known conflicts, provenance expectations, and approval notes.
+   Copy `source-profiles/TEMPLATE.md` into the configured `source_profiles_root`. Using the recommended configuration:
+
+   ```text
+   source-profiles/{SOURCE_CODE}.md
+   ```
+
+   Preserve the distinction between source guidance and governed artifacts:
+
+   ```text
+   source-profiles/              Source-specific operating guidance
+   docs/knowledge-acquisition/   Governed acquisition artifacts
+   ```
+
+   Fill in source identity, source surfaces, included objects, excluded objects, known conflicts, provenance expectations, and approval notes.
 
 3. Draft the Source Boundary Audit.
 
@@ -60,7 +73,25 @@ This helps compare local changes against future KAOS releases.
 
 5. Record human review.
 
-   A human reviewer should confirm whether the source boundary is clear enough to proceed, needs notes, is rejected, or requires additional review. Do not proceed to Acquisition Strategy when the boundary is unresolved.
+   A human reviewer records the applicable KAOS-approved status and decision values.
+
+   Approved status values:
+
+   - `Not Started`
+   - `In Progress`
+   - `Ready`
+   - `Blocked`
+   - `Completed`
+
+   Approved decision values:
+
+   - `Approved`
+   - `Approved With Notes`
+   - `Rejected`
+   - `Human Review Required`
+   - `Not Applicable`
+
+   Review notes should explain what is authorized and what is not authorized. Acquisition Strategy must not begin while the source boundary remains unresolved.
 
 6. Run validation when Node.js is available.
 
@@ -86,6 +117,6 @@ The first acquisition is complete when:
 - A Source Boundary Audit artifact exists.
 - Included and excluded scope are clear.
 - Access constraints, assumptions, and known risks are recorded.
-- Human review is recorded.
+- Human review records an approved KAOS status value, an approved KAOS decision value, notes, and authorization.
 - Validation has been run when available.
 - The next lifecycle stage is identified.

@@ -26,5 +26,16 @@
 
 ## Human Review
 
+Reviewer:
+
+Review date:
+
+Status:
+
+Decision:
+
+Notes:
+
+Authorization:
 
 ## Next Stage
